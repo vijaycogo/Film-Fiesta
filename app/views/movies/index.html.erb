@@ -154,7 +154,7 @@
             <i class="fas fa-search"></i> Explore
           <% end %>
 
-          <%= link_to favorites_movies_path(movie_id: movie['id']), method: :post, class: 'favorite-link button' do %>
+          <%= link_to add_to_favorites_movie_path(movie['id']), method: :post, class: 'favorite-link button' do %>
             <i class="fas fa-heart"></i> Favorite
           <% end %>
         </div>

@@ -10,26 +10,40 @@
     text-align: center;
     background: blue;
     padding: 10px;
-    margin: -9px 0px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    margin: 0px 0px -9px 0px;
   }
 
-  .list-view-button {
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+  }
+
+  .back-button {
     text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .list-view-button a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
-    background-color: blue;
-    padding: 5px 10px;
+    background-color: yellow;
+    padding: 5px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s;
+    text-decoration: none; /* Remove underline */
+    color: black; /* Change text color to black */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    height: 20px;
+    margin: -6px 17px 9px 13px;
   }
 
-  .list-view-button a:hover {
-    background-color: #004080;
+  .back-button:hover {
+    background-color: #e0c100;
   }
 
   ul {
@@ -38,10 +52,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 50px; /* Adjusted margin to accommodate fixed header */
   }
 
   .favorite-movie-item {
-    width: 30%;
+    width: 22.5%; /* Adjusted width to accommodate four movies in a row */
+    margin: 0 1%;
     margin-bottom: 20px;
     background-color: #333;
     padding: 10px;
@@ -72,11 +88,64 @@
     margin-bottom: 5px;
     color: white;
   }
+
+  .action-button {
+    text-align: center;
+    background-color: yellow;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    text-decoration: none; /* Remove underline */
+    color: black; /* Change text color to black */
+  }
+
+  .action-button:hover {
+    background-color: #e0c100;
+  }
 </style>
 
-<h1>Favorite Movies</h1>
+<script>
+  // Add JavaScript to scroll to top when the back button is clicked
+  document.addEventListener('DOMContentLoaded', function() {
+    const backButton = document.getElementById('back-button');
+    if (backButton) {
+      backButton.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  });
+</script>
 
-<div class="list-view-button">
-  <%= link_to "Back to List View", movies_path %>
+<div class="header-content">
+  <h1>Favorite Movies</h1>
+
+  <div class="back-button">
+    <%= link_to movies_path do %>
+      <i class="fas fa-arrow-left"></i> Back to List View
+    <% end %>
+  </div>
 </div>
 
+<ul>
+  <% @favorite_movies.each do |favorite_movie| %>
+    <li class="favorite-movie-item">
+      <%= link_to movie_path(favorite_movie['id']) do %>
+        <%= image_tag("https://image.tmdb.org/t/p/w200#{favorite_movie['poster_path']}", alt: "Movie Poster for #{favorite_movie['title']}", class: 'favorite-movie-poster') %>
+      <% end %>
+
+      <div class="info-container">
+        <%= link_to movie_path(favorite_movie['id']), class: 'explore-link favorite-movie-title' do %>
+          <%= favorite_movie['title'] %>
+        <% end %>
+
+        <%= link_to destroy_favorite_movie_path(favorite_movie['id']), method: :delete, class: 'explore-link action-button' do %>
+          <i class="fas fa-heart"></i> Remove from Favorites
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>

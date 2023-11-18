@@ -11,11 +11,15 @@ class TmdbService
   
     def self.get_movie_details(movie_id)
       get("/movie/#{movie_id}")
-    # get("/movie/#{movie_id}&plot=full")
     end
   
     def self.get_latest_movies
       get('/movie/now_playing')['results']
+    end
+
+    def self.get_movies_details(favorite_movies)
+      movie_id = favorite_movies.first.to_i
+      get("/movie/#{movie_id}")
     end
   end
   
