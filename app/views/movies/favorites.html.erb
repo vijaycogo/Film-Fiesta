@@ -1,4 +1,3 @@
-<!-- app/views/movies/favorites.html.erb -->
 <style>
   body {
     background-color: black;
@@ -121,13 +120,12 @@
 </script>
 
 <div class="header-content">
-  <h1>Favorite Movies</h1>
-
-  <div class="back-button">
-  <%= link_to movies_path, style: 'text-decoration: none;' do %>
-    <i class="fas fa-arrow-left"></i> Back to List View
-  <% end %>
-</div>
+    <h1>Favorite Movies</h1>
+    <div class="back-button">
+        <%= link_to movies_path, style: 'text-decoration: none;' do %>
+            <i class="fas fa-arrow-left"></i> Back to List View
+        <% end %>
+    </div>
 </div>
 
 <ul>
@@ -139,11 +137,10 @@
 
       <div class="info-container">
         <%= link_to movie_path(favorite_movie['id']), class: 'explore-link favorite-movie-title' do %>
-          <%= favorite_movie['title'] %>
         <% end %>
 
         <%= link_to destroy_favorite_movie_path(favorite_movie['id']), method: :delete, class: 'explore-link action-button' do %>
-          <i class="fas fa-heart"></i> Remove from Favorites
+          <i></i> Remove from Favorites
         <% end %>
       </div>
     </li>

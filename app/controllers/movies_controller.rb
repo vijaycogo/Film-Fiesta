@@ -1,4 +1,3 @@
-# app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
   def index
     if params[:search].present?
@@ -13,10 +12,7 @@ class MoviesController < ApplicationController
   end
 
   def add_to_favorites
-    # Logic to add the movie to favorites
-    # You can use session or any other mechanism to store favorite movies
     movie_id = params[:id]
-
     # Initialize the session[:favorite_movies] array if it's not set
     session[:favorite_movies] ||= []
     # Check if the movie_id is not already in favorites
@@ -24,8 +20,6 @@ class MoviesController < ApplicationController
       session[:favorite_movies] << movie_id
     end
     redirect_back(fallback_location: root_path, notice: 'Movie added to favorites!')
-
-    # redirect_to movie_path(movie_id), notice: 'Added to favorites'
   end
 
   def destroy_favorite
