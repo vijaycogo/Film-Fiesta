@@ -1,0 +1,20 @@
+
+<%= image_tag("https://image.tmdb.org/t/p/w200#{@movie['poster_path']}", alt: 'Movie Poster') %>
+<h1><%= @movie['title'] %></h1>
+<p>Release Date: <%= @movie['release_date'] %></p>
+<p>Runtime: <%= @movie['runtime'] %></p>
+<p>Genres: 
+  <% @movie['genres'].each do |genre| %>
+    <%= genre['name'] %>
+    <% if !genre.equal?(@movie['genres'].last) %>, <% end %>
+  <% end %>
+</p>
+
+<p>Languages:
+  <% @movie['spoken_languages'].each do |language| %>
+    <%= language['english_name'] %>
+    <% if !language.equal?(@movie['spoken_languages'].last) %>, <% end %>
+  <% end %>
+</p>
+<p>Budget: <%= @movie['budget'] %></p>
+<p><%= @movie['overview'] %></p>
