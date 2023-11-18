@@ -3,20 +3,99 @@
   body {
     background-color: black;
     color: white;
-    margin: 10px; /* Added margin around the page */
+    margin: 60px 10px 10px; /* Updated margin to make space for the fixed header */
+    font-family: 'Arial', sans-serif; /* Add a preferred font family */
+  }
+
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    z-index: 1000;
+    padding: 10px 20px; /* Add padding to the fixed header */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+  }
+
+  h1 {
+    text-align: center;
+    background: #1b1b63;
+    padding: 10px;
+    margin: 0;
+    font-size: 1.5em; /* Increase font size for the header */
+  }
+
+  .search-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .search-input {
+    height: 32px;
+    width: 43%;
+    margin-right: 10px;
+    padding: 5px; /* Add padding for better input appearance */
+    border: 1px solid #ccc; /* Add a border for input */
+    border-radius: 5px;
+    font-size: 1em; /* Adjust font size */
+  }
+
+  .search-button {
+    width: 72px;
+    height: 36px;
+    background-color: yellow;
+    transition: background-color 0.3s;
+    border: none; /* Remove button border */
+    border-radius: 5px;
+    cursor: pointer; /* Add pointer cursor on hover */
+    font-size: 1em; /* Adjust font size */
+  }
+
+  .search-button:hover {
+    background-color: #e0c100;
+  }
+
+  .movies-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1.2em; /* Adjust font size for the heading */
+  }
+
+  .buttonf {
+    text-align: center;
+    background-color: yellow;
+    /* margin: 3px 6px 3px 6px; */
+    margin: 16px 59px 17px 30px;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    text-decoration: none; /* Remove underline */
+    color: black; /* Change text color to black */
+    font-size: 1em; /* Adjust font size */
+  }
+
+  .buttonf:hover {
+    background-color: #e0c100;
   }
 
   .movies-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-
-  h1 {
-    text-align: center;
-    background: blue;
-    padding: 10px;
-    margin: -9px 0px;
+    margin-top: 80px; /* Adjusted margin to make space for the fixed header */
   }
 
   .movie-item {
@@ -60,8 +139,7 @@
     height: 6%;
   }
 
-  .button,
-  .buttonf {
+  .button {
     text-align: center;
     background-color: yellow;
     margin: 3px 6px 3px 6px;
@@ -74,67 +152,38 @@
     transition: background-color 0.3s;
     text-decoration: none; /* Remove underline */
     color: black; /* Change text color to black */
+    font-size: 1em; /* Adjust font size */
   }
 
-  .button:hover,
-  .buttonf:hover {
+  .button:hover {
     background-color: #e0c100;
   }
 
   .heart-icon {
     margin-right: 5px;
   }
-
-  .search-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  .search-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .search-input {
-    height: 32px;
-    width: 43%;
-    margin-right: 10px;
-  }
-
-  .search-button {
-    width: 72px;
-    height: 36px;
-    background-color: yellow;
-    transition: background-color 0.3s;
-  }
-
-  .search-button:hover {
-    background-color: #e0c100;
-  }
-
-  .movies-heading {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
 </style>
 
-<h1>Vijay Film Fiesta </h1>
+<div class="fixed-header">
+  <h1>Vijay Film Fiesta</h1>
 
-<%= form_tag(movies_path, method: :get, class: 'search-container') do %>
-  <div class="search-form">
-    <%= text_field_tag(:search, params[:search], placeholder: 'Search by title', class: 'search-input') %>
-    <%= submit_tag('Search', class: 'search-button') %>
-  </div>
-<% end %>
-
-<div class="movies-heading">
-  <h2>Latest Movies</h2>
-  <%= link_to favorites_movies_path, class: 'buttonf' do %>
-    <i class="fas fa-heart heart-icon"></i> Favorite Movies
+  <%= form_tag(movies_path, method: :get, class: 'search-container') do %>
+    <div class="search-form">
+      <%= text_field_tag(:search, params[:search], placeholder: 'Search by title', class: 'search-input') %>
+      <%= submit_tag('Search', class: 'search-button') %>
+    </div>
   <% end %>
+
+  <div class="movies-heading">
+    <h2>Latest Movies</h2>
+
+    <%= link_to favorites_movies_path, class: 'buttonf' do %>
+    <i></i> Favorite Movies
+    <% favorite_count = session[:favorite_movies].compact.uniq.count %>
+    <span class="favorite-count"><%= "(#{favorite_count})" unless favorite_count.zero? %></span>
+    <% end %>
+
+  </div>
 </div>
 
 <div class="movies-container">
@@ -145,8 +194,7 @@
       <% end %>
 
       <div class="info-container">
-        <%= link_to movie_path(movie['id']), class: 'explore-link movie-title' do %>
-          <%= movie['title'] %>
+        <%= link_to movie_path(movie['id']), class: 'explore-link movie-title', style: 'text-decoration: none;' do %>
         <% end %>
 
         <div class="button-container">
@@ -162,3 +210,18 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  // Add JavaScript to handle scrolling and fixed header
+  window.onscroll = function() {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+      document.querySelector('.fixed-header').style.background = '#000';
+    } else {
+      document.querySelector('.fixed-header').style.background = 'transparent';
+    }
+  }
+</script>
