@@ -1,20 +1,121 @@
+<style>
+  body {
+    background-color: black;
+    color: white;
+    margin: 10px;
+  }
 
-<%= image_tag("https://image.tmdb.org/t/p/w200#{@movie['poster_path']}", alt: 'Movie Poster') %>
-<h1><%= @movie['title'] %></h1>
-<p>Release Date: <%= @movie['release_date'] %></p>
-<p>Runtime: <%= @movie['runtime'] %></p>
-<p>Genres: 
-  <% @movie['genres'].each do |genre| %>
-    <%= genre['name'] %>
-    <% if !genre.equal?(@movie['genres'].last) %>, <% end %>
-  <% end %>
-</p>
+  .show-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
 
-<p>Languages:
-  <% @movie['spoken_languages'].each do |language| %>
-    <%= language['english_name'] %>
-    <% if !language.equal?(@movie['spoken_languages'].last) %>, <% end %>
-  <% end %>
-</p>
-<p>Budget: <%= @movie['budget'] %></p>
-<p><%= @movie['overview'] %></p>
+  .poster {
+    width: 25%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .poster:hover {
+    transform: scale(1.1);
+  }
+
+  .poster img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .details {
+    width: 45%;
+    margin-left: 20px; /* Add space between the poster and details column */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .details h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .details p {
+    margin-bottom: 8px;
+  }
+
+  .details p:last-child {
+    margin-bottom: 0;
+  }
+
+  .movies-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* background-color: #682a81; */
+    /* margin-bottom: 20px; Add margin between the heading and the details */
+  }
+
+  .movies-heading button {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #682a81;
+    /* margin: 10px 191px; */
+    margin: 22px 190px 0px 190px
+  }
+
+  .movies-heading button:hover {
+    background-color: #004080; /* Darker blue on hover */
+  }
+
+  h1 {
+    text-align: center;
+    background: blue;
+    padding: 10px;
+    margin: -9px 0px;
+  }
+</style>
+
+<h1>Vijay Film Fiesta </h1>
+
+<div class="movies-heading">
+  <%= button_to "Home", movies_path, method: :get %>
+  <%= button_to "Favorite Movies", favorites_movies_path, method: :get %>
+</div>
+
+<div class="show-container">
+  <div class="poster">
+    <%= image_tag("https://image.tmdb.org/t/p/w200#{@movie['poster_path']}", alt: 'Movie Poster') %>
+  </div>
+
+  <div class="details">
+    <h2><%= @movie['title'] %></h2>
+    <p>Release Date: <%= @movie['release_date'] %></p>
+    <p>Runtime: <%= @movie['runtime'] %></p>
+    <p>Genres: 
+      <% @movie['genres'].each do |genre| %>
+        <%= genre['name'] %>
+        <% if !genre.equal?(@movie['genres'].last) %>, <% end %>
+      <% end %>
+    </p>
+
+    <p>Languages:
+      <% @movie['spoken_languages'].each do |language| %>
+        <%= language['english_name'] %>
+        <% if !language.equal?(@movie['spoken_languages'].last) %>, <% end %>
+      <% end %>
+    </p>
+    
+    <p>Budget: <%= @movie['budget'] %></p>
+    <p><%= @movie['overview'] %></p>
+  </div>
+</div>

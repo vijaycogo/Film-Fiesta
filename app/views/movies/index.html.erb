@@ -1,18 +1,164 @@
-<h1>Latest Movies</h1>
+<!-- app/views/movies/index.html.erb -->
+<style>
+  body {
+    background-color: black;
+    color: white;
+    margin: 10px; /* Added margin around the page */
+  }
 
-<%= form_tag(movies_path, method: :get) do %>
-  <%= text_field_tag(:search, params[:search], placeholder: 'Search by title') %>
-  <%= submit_tag('Search') %>
+  .movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  h1 {
+    text-align: center;
+    background: blue;
+    padding: 10px;
+    margin: -9px 0px;
+  }
+
+  .movie-item {
+    width: 23%;
+    margin-bottom: 20px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .movie-item:hover {
+    background-color: #555;
+  }
+
+  .movie-poster {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s;
+  }
+
+  .movie-item:hover .movie-poster {
+    transform: scale(1.1);
+  }
+
+  .info-container {
+    margin-top: 10px;
+  }
+
+  .movie-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: white;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    background-color: black;
+    height: 6%;
+  }
+
+  .button,
+  .buttonf {
+    text-align: center;
+    background-color: yellow;
+    margin: 3px 6px 3px 6px;
+    width: 25%;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    text-decoration: none; /* Remove underline */
+    color: black; /* Change text color to black */
+  }
+
+  .button:hover,
+  .buttonf:hover {
+    background-color: #e0c100;
+  }
+
+  .heart-icon {
+    margin-right: 5px;
+  }
+
+  .search-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .search-input {
+    height: 32px;
+    width: 43%;
+    margin-right: 10px;
+  }
+
+  .search-button {
+    width: 72px;
+    height: 36px;
+    background-color: yellow;
+    transition: background-color 0.3s;
+  }
+
+  .search-button:hover {
+    background-color: #e0c100;
+  }
+
+  .movies-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+</style>
+
+<h1>Vijay Film Fiesta </h1>
+
+<%= form_tag(movies_path, method: :get, class: 'search-container') do %>
+  <div class="search-form">
+    <%= text_field_tag(:search, params[:search], placeholder: 'Search by title', class: 'search-input') %>
+    <%= submit_tag('Search', class: 'search-button') %>
+  </div>
 <% end %>
 
-<ul>
-  <% @movies.each do |movie| %>
-    <li>
-       <%= link_to movie['title'], movie_path(movie['id']) %>
-       <%= link_to movie_path(movie['id']) do %>
-         <%= image_tag("https://image.tmdb.org/t/p/w200#{movie['poster_path']}", alt: 'Movie Poster') %>
-       <% end %>
-      <%= link_to 'Add to Favorites', favorites_movies_path(movie_id: movie['id']), method: :post %>
-    </li>
+<div class="movies-heading">
+  <h2>Latest Movies</h2>
+  <%= link_to favorites_movies_path, class: 'buttonf' do %>
+    <i class="fas fa-heart heart-icon"></i> Favorite Movies
   <% end %>
-</ul>
+</div>
+
+<div class="movies-container">
+  <% @movies.each do |movie| %>
+    <div class="movie-item">
+      <%= link_to movie_path(movie['id']) do %>
+        <%= image_tag("https://image.tmdb.org/t/p/w200#{movie['poster_path']}", alt: "Movie Poster for #{movie['title']}", class: 'movie-poster') %>
+      <% end %>
+
+      <div class="info-container">
+        <%= link_to movie_path(movie['id']), class: 'explore-link movie-title' do %>
+          <%= movie['title'] %>
+        <% end %>
+
+        <div class="button-container">
+          <%= link_to movie_path(movie['id']), class: 'explore-link button' do %>
+            <i class="fas fa-search"></i> Explore
+          <% end %>
+
+          <%= link_to favorites_movies_path(movie_id: movie['id']), method: :post, class: 'favorite-link button' do %>
+            <i class="fas fa-heart"></i> Favorite
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

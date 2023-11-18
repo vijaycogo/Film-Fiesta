@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+
+.explore-link,
+.favorite-link {
+  margin-left: 10px; /* Adjust the margin as needed */
+}
+ .favorite-link i {
+    color: #f6b614;
+    font-size: 1.2em; /* Adjust the font size as needed */
+    margin-right: 5px; /* Add margin for spacing */
+  }

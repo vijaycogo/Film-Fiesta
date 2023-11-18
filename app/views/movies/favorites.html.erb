@@ -1,5 +1,82 @@
+<!-- app/views/movies/favorites.html.erb -->
+<style>
+  body {
+    background-color: black;
+    color: white;
+    margin: 10px;
+  }
+
+  h1 {
+    text-align: center;
+    background: blue;
+    padding: 10px;
+    margin: -9px 0px;
+  }
+
+  .list-view-button {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .list-view-button a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    background-color: blue;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .list-view-button a:hover {
+    background-color: #004080;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .favorite-movie-item {
+    width: 30%;
+    margin-bottom: 20px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .favorite-movie-item:hover {
+    background-color: #555;
+  }
+
+  .favorite-movie-poster {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s;
+  }
+
+  .favorite-movie-item:hover .favorite-movie-poster {
+    transform: scale(1.1);
+  }
+
+  .info-container {
+    margin-top: 10px;
+  }
+
+  .favorite-movie-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: white;
+  }
+</style>
+
 <h1>Favorite Movies</h1>
 
-<ul>
-  <% # Display favorite movies here %>
-</ul>
+<div class="list-view-button">
+  <%= link_to "Back to List View", movies_path %>
+</div>
+
