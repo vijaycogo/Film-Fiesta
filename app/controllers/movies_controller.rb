@@ -31,7 +31,7 @@ class MoviesController < ApplicationController
 
   def favorites
     @favorite_movies=[]
-    session[:favorite_movies].compact.uniq.each do |movie_id|
+    session[:favorite_movies].to_a.compact.uniq.each do |movie_id|
       @favorite_movies <<  TmdbService.get_movie_details(movie_id)
     end
   end

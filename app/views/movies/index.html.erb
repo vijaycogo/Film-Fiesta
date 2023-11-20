@@ -179,7 +179,7 @@
 
     <%= link_to favorites_movies_path, class: 'buttonf' do %>
     <i></i> Favorite Movies
-    <% favorite_count = session[:favorite_movies].compact.uniq.count %>
+    <% favorite_count = session[:favorite_movies].to_a.compact.uniq.count %>
     <span class="favorite-count"><%= "(#{favorite_count})" unless favorite_count.zero? %></span>
     <% end %>
 
