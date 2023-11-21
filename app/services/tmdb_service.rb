@@ -2,7 +2,9 @@
 class TmdbService
     include HTTParty
     base_uri 'https://api.themoviedb.org/3'
-    default_params api_key: ENV['TMDB_API_KEY'], language: 'en-US'
+    TMDB_API_KEY='0f0e6cd125dd0233509c13611705bf87'
+    # default_params api_key: ENV['TMDB_API_KEY'], language: 'en-US'
+    default_params api_key: TMDB_API_KEY, language: 'en-US'
     format :json
   
     def self.search_movies(query)

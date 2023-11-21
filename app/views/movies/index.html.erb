@@ -187,29 +187,39 @@
 </div>
 
 <div class="movies-container">
-  <% @movies.each do |movie| %>
-    <div class="movie-item">
-      <%= link_to movie_path(movie['id']) do %>
-        <%= image_tag("https://image.tmdb.org/t/p/w200#{movie['poster_path']}", alt: "Movie Poster for #{movie['title']}", class: 'movie-poster') %>
-      <% end %>
-
-      <div class="info-container">
-        <%= link_to movie_path(movie['id']), class: 'explore-link movie-title', style: 'text-decoration: none;' do %>
+  <% if @movies.present? %>
+    <% @movies.each do |movie| %>
+      <div class="movie-item">
+        <%= link_to movie_path(movie['id']) do %>
+          <%= image_tag("https://image.tmdb.org/t/p/w200#{movie['poster_path']}", alt: "Movie Poster for #{movie['title']}", class: 'movie-poster') %>
         <% end %>
 
-        <div class="button-container">
-          <%= link_to movie_path(movie['id']), class: 'explore-link button' do %>
-            <i class="fas fa-search"></i> Explore
+        <div class="info-container">
+          <% if movie.present? %>
+            <%= link_to movie_path(movie['id']), class: 'explore-link movie-title', style: 'text-decoration: none;' do %>
+              <%= movie['title'] %> <!-- Display the movie title if it's present -->
+            <% end %>
           <% end %>
 
-          <%= link_to add_to_favorites_movie_path(movie['id']), method: :post, class: 'favorite-link button' do %>
-            <i class="fas fa-heart"></i> Favorite
-          <% end %>
+          <div class="button-container">
+            <% if movie.present? %>
+              <%= link_to movie_path(movie['id']), class: 'explore-link button' do %>
+                <i class="fas fa-search"></i> Explore
+              <% end %>
+
+              <%= link_to add_to_favorites_movie_path(movie['id']), method: :post, class: 'favorite-link button' do %>
+                <i class="fas fa-heart"></i> Favorite
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
+  <% else %>
+    <p>No movies available</p>
   <% end %>
 </div>
+
 
 <script>
   // Add JavaScript to handle scrolling and fixed header
